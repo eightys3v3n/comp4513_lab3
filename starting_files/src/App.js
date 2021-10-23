@@ -5,10 +5,12 @@ import PhotoBrowser from './components/PhotoBrowser.js';
 import * as cloneDeep from 'lodash/cloneDeep';
 import { Route } from 'react-router-dom';
 import Home from './components/Home.js';
+import FavoritesBar from './components/FavoritesBar.js';
 
 function App() {
-  const [photos, setPhotos] = useState([]);
-
+    const [photos, setPhotos] = useState([]);
+    const [favorites, setFavorites] = React.useState([]);
+    
 /*   useEffect( () => {
     const url = "https://www.randyconnolly.com/funwebdev/3rd/api/travel/images.php?iso=gb";
     fetch(url)
@@ -24,7 +26,8 @@ function App() {
         const url = "https://www.randyconnolly.com/funwebdev/3rd/api/travel/images.php?iso=gb";
         const response = await fetch(url);
         const data = await response.json();
-        setPhotos(data);
+          setPhotos(data);
+          console.log(photos[0]);
       }
       catch (err) {
         console.error(err);
@@ -33,7 +36,6 @@ function App() {
     // invoke the async function
     getData();
   }, [] );
-
 
   const updatePhoto = (id, photo) => {
     // Create deep clone of photo array from state.
@@ -47,9 +49,16 @@ function App() {
     photoToReplace.location.country = photo.location.country;
     // update state
     setPhotos(copyPhotos);
- }
- 
+  }
 
+    const addFavorite = (id) => {
+        console.log(`Adding favorite ${id}`);
+    }
+
+    const removeFavorite = (id) => {
+        console.log(`Removing favorite ${id}`);
+    }
+    
 
   return (
     <main>
@@ -57,10 +66,18 @@ function App() {
       <Route path='/' exact component={Home} />
         <Route path='/home' exact component={Home} />
         <Route path='/browse' exact 
-          render={ (props) => 
-             <PhotoBrowser 
-                 photos={photos}
-                 updatePhoto={updatePhoto} /> } 
+               render={ (props) =>
+                   <div>
+                       <FavoritesBar favorites={favorites}
+                                     removeFavorite={removeFavorite}
+                       />
+                       <PhotoBrowser 
+                           photos={photos}
+                           updatePhoto={updatePhoto}
+                           addFavorite={addFavorite}
+                       />
+                   </div>
+               }
          />
     </main>
   );

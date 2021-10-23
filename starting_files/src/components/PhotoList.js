@@ -6,7 +6,9 @@ const PhotoList = (props) => {
    return (       
       <article className="photos">
           {props.photos.map( (p) => <PhotoThumb photo={p} key={p.id} 
-                                                showImageDetails={props.showImageDetails} /> )}              
+                                                showImageDetails={props.showImageDetails}
+                                                addFavorite={props.addFavorite}
+                                    /> )}              
       </article>
    );
    } else 
