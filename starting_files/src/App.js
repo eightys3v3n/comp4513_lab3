@@ -52,10 +52,17 @@ function App() {
   }
 
     const addFavorite = (id) => {
+        React.setState({ favorites: (state, props) => {
+            return [...state.favorites, id];
+        }});
         console.log(`Adding favorite ${id}`);
     }
 
     const removeFavorite = (id) => {
+        React.setState({ favorites: (state, props) => {
+            newFavorites = cloneDeep(state);
+            newFavorites[id]
+        }});
         console.log(`Removing favorite ${id}`);
     }
     
