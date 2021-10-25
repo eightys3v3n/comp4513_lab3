@@ -27,7 +27,7 @@ function App() {
         const response = await fetch(url);
         const data = await response.json();
           setPhotos(data);
-          console.log(photos[0]);
+          console.log(data[0]);
       }
       catch (err) {
         console.error(err);
@@ -52,17 +52,14 @@ function App() {
   }
 
     const addFavorite = (id) => {
-        React.setState({ favorites: (state, props) => {
-            return [...state.favorites, id];
-        }});
+        setFavorites([...favorites, id]);
         console.log(`Adding favorite ${id}`);
     }
 
     const removeFavorite = (id) => {
-        React.setState({ favorites: (state, props) => {
-            newFavorites = cloneDeep(state);
-            newFavorites[id]
-        }});
+        let newFavorites = cloneDeep(favorites);
+        delete newFavorites[id];
+        setFavorites(newFavorites);
         console.log(`Removing favorite ${id}`);
     }
     
@@ -76,6 +73,7 @@ function App() {
                render={ (props) =>
                    <div>
                        <FavoritesBar favorites={favorites}
+                                     photos={photos}
                                      removeFavorite={removeFavorite}
                        />
                        <PhotoBrowser 

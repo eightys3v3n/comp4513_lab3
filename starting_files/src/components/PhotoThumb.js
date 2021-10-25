@@ -1,8 +1,7 @@
 import React from "react";
+import imgURL from "./imageURL.js";
 
 const PhotoThumb = props => {
-    const imgURL = `https://www.randyconnolly.com/funwebdev/3rd/images/travel/square150/${props.photo.filename}`;
-
     const handleViewClick = () => {
         props.showImageDetails(props.photo.id);
     }
@@ -14,7 +13,10 @@ const PhotoThumb = props => {
     return ( 
         <div className="photoBox" onClick={ handleViewClick }>
             <figure>
-                <img src={imgURL} className="photoThumb" title={props.photo.title} alt={props.photo.title} />
+                <img src={imgURL(props.photo)}
+                     className="photoThumb"
+                     title={props.photo.title}
+                     alt={props.photo.title} />
             </figure>
             <div>
                 <h3>{props.photo.title}</h3>
