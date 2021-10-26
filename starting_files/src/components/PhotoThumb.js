@@ -11,12 +11,13 @@ const PhotoThumb = props => {
     }
     
     return ( 
-        <div className="photoBox" onClick={ handleViewClick }>
+        <div className="photoBox">
             <figure>
                 <img src={imgURL(props.photo)}
                      className="photoThumb"
                      title={props.photo.title}
-                     alt={props.photo.title} />
+                     alt={props.photo.title}
+                     onClick={ handleViewClick } />
             </figure>
             <div>
                 <h3>{props.photo.title}</h3>

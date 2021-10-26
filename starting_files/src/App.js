@@ -8,26 +8,17 @@ import Home from './components/Home.js';
 import FavoritesBar from './components/FavoritesBar.js';
 
 function App() {
-    const [photos, setPhotos] = useState([]);
-    const [favorites, setFavorites] = React.useState([]);
-    
-/*   useEffect( () => {
-    const url = "https://www.randyconnolly.com/funwebdev/3rd/api/travel/images.php?iso=gb";
-    fetch(url)
-      .then( resp => resp.json() )
-      .then( data => setPhotos(data))
-      .catch( err => console.error(err));
-
-  }); */
-
+  const [photos, setPhotos] = useState([]);
+  const [favorites, setFavorites] = React.useState([]);
+  
   useEffect(  () => {
     const getData = async () => {
       try {
         const url = "https://www.randyconnolly.com/funwebdev/3rd/api/travel/images.php?iso=gb";
         const response = await fetch(url);
         const data = await response.json();
-          setPhotos(data);
-          console.log(data[0]);
+        setPhotos(data);
+        console.log(data[0]);
       }
       catch (err) {
         console.error(err);
@@ -36,7 +27,7 @@ function App() {
     // invoke the async function
     getData();
   }, [] );
-
+  
   const updatePhoto = (id, photo) => {
     // Create deep clone of photo array from state.
     // We will use a lodash function for that task.
@@ -50,73 +41,48 @@ function App() {
     // update state
     setPhotos(copyPhotos);
   }
-
-    const addFavorite = (id) => {
-        setFavorites([...favorites, id]);
-        console.log(`Adding favorite ${id}`);
+  
+  const addFavorite = (id) => {
+    if (! favorites.includes(id)) {
+      setFavorites([...favorites, id]);
+      console.log(`Adding favorite ${id}`);
+      console.log(favorites);
+    } else {
+      console.log(`Ignoring duplicate favorite add ${id}`);
     }
-
-    const removeFavorite = (id) => {
-        let newFavorites = cloneDeep(favorites);
-        delete newFavorites[id];
-        setFavorites(newFavorites);
-        console.log(`Removing favorite ${id}`);
-    }
-    
-
+  }
+  
+  const removeFavorite = (id) => {
+    let newFavorites = cloneDeep(favorites);
+    delete newFavorites[id];
+    setFavorites(newFavorites);
+    console.log(`Removing favorite ${id}`);
+  }
+  
+  console.log(favorites);
+  
   return (
     <main>
       <HeaderApp />
       <Route path='/' exact component={Home} />
-        <Route path='/home' exact component={Home} />
-        <Route path='/browse' exact 
-               render={ (props) =>
-                   <div>
-                       <FavoritesBar favorites={favorites}
-                                     photos={photos}
-                                     removeFavorite={removeFavorite}
-                       />
-                       <PhotoBrowser 
-                           photos={photos}
-                           updatePhoto={updatePhoto}
-                           addFavorite={addFavorite}
-                       />
-                   </div>
-               }
-         />
+      <Route path='/home' exact component={Home} />
+      <Route path='/browse' exact 
+             render={ (props) =>
+               <div>
+                 <FavoritesBar favorites={favorites}
+                               photos={photos}
+                               removeFavorite={removeFavorite}
+                 />
+                 <PhotoBrowser 
+                   photos={photos}
+                   updatePhoto={updatePhoto}
+                   addFavorite={addFavorite}
+                 />
+               </div>
+             }
+      />
     </main>
   );
 }
-
-
-/* class App extends React.Component { 
-
-  constructor(props) {
-    super(props);
-    this.state = { photos: [] };
-  }
-
-  async componentDidMount() {
-    try {
-      const url = "http://randyconnolly.com/funwebdev/3rd/api/travel/images.php?iso=gb";
-      const response = await fetch(url);
-      const jsonData = await response.json();
-      this.setState( {photos: jsonData } );
-    }
-    catch (error) {
-       console.error(error);
-    }
-  }
-  
-  
-  render() {
-    return (
-      <main>
-        <HeaderApp />
-        <PhotoBrowser photos={this.state.photos} />
-      </main>
-    );
-  }
-} */
 
 export default App;
