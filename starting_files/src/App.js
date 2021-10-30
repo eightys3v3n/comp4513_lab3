@@ -53,8 +53,8 @@ function App() {
   }
   
   const removeFavorite = (id) => {
-    let newFavorites = cloneDeep(favorites);
-    delete newFavorites[id];
+    let newFavorites = [...favorites];
+    newFavorites = newFavorites.filter(item => item !== id);
     setFavorites(newFavorites);
     console.log(`Removing favorite ${id}`);
   }

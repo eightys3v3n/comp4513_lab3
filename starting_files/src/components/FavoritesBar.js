@@ -25,7 +25,10 @@ const FavoritesBar = props => {
           return (<FavoriteItem source={fav.source}
                                 title={fav.title}
                                 alt={fav.alt}
-                                key={fav.id} />);
+                                key={fav.id}
+                                id={fav.id}
+                                removeFavorite={props.removeFavorite}
+                  />);
         })
       }
     </section>);

@@ -13,7 +13,7 @@ const PhotoThumb = props => {
     return ( 
         <div className="photoBox">
             <figure>
-                <img src={imgURL(props.photo)}
+                <img src={imgURL(props.photo.filename)}
                      className="photoThumb"
                      title={props.photo.title}
                      alt={props.photo.title}

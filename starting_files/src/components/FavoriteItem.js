@@ -2,7 +2,7 @@ import React from "react";
 
 const FavoriteItem = props => {
   function removeFavorite(e) {
-
+    props.removeFavorite(props.id);
   }
 
   
